@@ -6,28 +6,27 @@
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-
-    android:focusableInTouchMode="true"
+    android:layout_margin="@dimen/cardview_margin"
+    card_view:cardBackgroundColor="#E6E6E6"
+    card_view:cardElevation="8dp"
     android:clickable="true"
-    android:focusable="true"
-
-
-    card_view:cardCornerRadius="4dp">
+    android:foreground="?android:attr/selectableItemBackground">
 
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground">
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/title"
             android:text="title"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="22dp"
+            android:maxLines="3" />
 
     <ImageView
         android:id="@+id/thumbnail"

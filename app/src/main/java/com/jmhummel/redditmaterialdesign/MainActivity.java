@@ -102,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder viewHolder, int i) {
             if (!posts.get(i).data.thumbnail.equals(""))
                 Picasso.with(context).load(posts.get(i).data.thumbnail).into(viewHolder.thumbnail);
+            else
+                viewHolder.thumbnail.setImageDrawable(null);
             Log.d("Set Title", posts.get(i).data.title);
             viewHolder.title.setText(posts.get(i).data.title);
 
