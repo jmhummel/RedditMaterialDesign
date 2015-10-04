@@ -1,8 +1,12 @@
 
 package com.jmhummel.redditmaterialdesign.Model;
 
+import android.text.format.Time;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -169,5 +173,31 @@ public class Data_ {
     @SerializedName("ups")
     @Expose
     public Integer ups;
+
+    public Date getDateCreated() {
+        Date time = new Date((long)createdUtc*1000);
+        return time;
+    }
+
+    public String getTimeAgo() {
+        TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+        Date now = new Date();
+        Date created = getDateCreated();
+        long diffInMillis = now.getTime() - created.getTime();
+        long days = timeUnit.toDays(diffInMillis);
+        long hours = timeUnit.toHours(diffInMillis);
+        long minutes = timeUnit.toMinutes(diffInMillis);
+        long seconds = timeUnit.toSeconds(diffInMillis);
+
+        if (days > 0)
+            return days + " days ago";
+        if (hours > 0)
+            return hours + " hours ago";
+        if (minutes > 0)
+            return minutes + " minutes ago";
+        if (seconds > 0)
+            return seconds + " seconds ago";
+        return diffInMillis + " milliseconds ago";
+    }
 
 }

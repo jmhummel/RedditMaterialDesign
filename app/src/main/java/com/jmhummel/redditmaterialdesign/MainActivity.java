@@ -17,10 +17,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jmhummel.redditmaterialdesign.Model.Child;
+import com.jmhummel.redditmaterialdesign.Model.Data_;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private class PostRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
+    public class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerViewAdapter.ViewHolder>{
         private Context context;
         private List<Child> posts;
 
@@ -100,14 +106,20 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder viewHolder, int i) {
-            if (!posts.get(i).data.thumbnail.equals(""))
-                Picasso.with(context).load(posts.get(i).data.thumbnail).into(viewHolder.thumbnail);
+            Data_ post = posts.get(i).data;
+
+            if (!post.thumbnail.equals(""))
+                Picasso.with(context).load(post.thumbnail).into(viewHolder.thumbnail);
             else
                 viewHolder.thumbnail.setImageDrawable(null);
-            Log.d("Set Title", posts.get(i).data.title);
-            viewHolder.title.setText(posts.get(i).data.title);
+            Log.d("Set Title", post.title);
+            viewHolder.title.setText(post.title);
 
-            viewHolder.view.setOnClickListener(new View.OnClickListener() {
+            viewHolder.age.setText(post.getTimeAgo());
+            viewHolder.submitter.setText(post.author);
+            viewHolder.subreddit.setText(post.subreddit);
+
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
@@ -124,18 +136,20 @@ public class MainActivity extends AppCompatActivity {
         public int getItemCount() {
             return posts.size();
         }
-    }
 
-    private class ViewHolder extends  RecyclerView.ViewHolder{
-        public final View view;
-        public final ImageView thumbnail;
-        public final TextView title;
+        class ViewHolder extends  RecyclerView.ViewHolder{
+            @Bind(R.id.title)       TextView title;
+            @Bind(R.id.thumbnail)   ImageView thumbnail;
+            @Bind(R.id.age)         TextView age;
+            @Bind(R.id.submitter)   TextView submitter;
+            @Bind(R.id.subreddit)   TextView subreddit;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            view = itemView;
-            thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
-            title = (TextView) itemView.findViewById(R.id.title);
+            public ViewHolder(View itemView) {
+                super(itemView);
+                ButterKnife.bind(this, itemView);
+            }
         }
     }
+
+
 }
