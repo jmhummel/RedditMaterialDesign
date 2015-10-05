@@ -117,7 +117,9 @@ public class MainActivity extends AppCompatActivity {
 
             viewHolder.age.setText(post.getTimeAgo());
             viewHolder.submitter.setText(post.author);
-            viewHolder.subreddit.setText(post.subreddit);
+            viewHolder.subreddit.setText("/r/" + post.subreddit);
+
+            viewHolder.comments.setText(post.numComments + " comments");
 
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             @Bind(R.id.age)         TextView age;
             @Bind(R.id.submitter)   TextView submitter;
             @Bind(R.id.subreddit)   TextView subreddit;
+            @Bind(R.id.comments)    TextView comments;
 
             public ViewHolder(View itemView) {
                 super(itemView);
